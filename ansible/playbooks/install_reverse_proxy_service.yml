@@ -1,0 +1,40 @@
+---
+- hosts: orangepi
+  become: true
+
+  tasks:
+    - name: Create directory for Reverse Proxy service
+      file:
+        path: "{{ reverse_proxy_dir }}"
+        state: directory
+        mode: 0755
+
+    - name: Create a docker-compose.yml file
+      ansible.builtin.template:
+        src: reverse_proxy/docker-compose.yml
+        dest: "{{ reverse_proxy_dir }}"
+
+    - name: Create a config.yml file
+      ansible.builtin.template:
+        src: reverse_proxy/config.yml
+        dest: "{{ reverse_proxy_dir }}"
+
+    - name: Create a .env file
+      ansible.builtin.template:
+        src: reverse_proxy/.env
+        dest: "{{ reverse_proxy_dir }}"
+
+    - name: Create a traefik.yml file
+      ansible.builtin.template:
+        src: reverse_proxy/traefik.yml
+        dest: "{{ reverse_proxy_dir }}"
+
+    - name: Create a acme.json file
+      ansible.builtin.template:
+        src: reverse_proxy/acme.json
+        dest: "{{ reverse_proxy_dir }}"
+        mode: 0600
+        force: no
+
+    - name: Run `docker-compose up`
+      command: "sudo docker compose -f {{ reverse_proxy_dir }}/docker-compose.yml up -d --force-recreate"

@@ -1,0 +1,43 @@
+api:
+  dashboard: true
+  debug: true
+entryPoints:
+  http:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: https
+          scheme: https
+  https:
+    address: ":443"
+serversTransport:
+  insecureSkipVerify: true
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+  file:
+    filename: /config.yml
+certificatesResolvers:
+    letsencrypt:
+      acme:
+        email: "ricardobchaves6@gmail.com"
+        storage: "acme.json"
+#        caserver: "https://acme-staging-v02.api.letsencrypt.org/directory"
+        dnsChallenge:
+          provider: "godaddy"
+          delayBeforeCheck: "30"
+          resolvers:
+            - "10.0.1.2"
+log:
+  format: json
+  level: INFO
+accessLog:
+  format: json
+
+experimental:
+  plugins:
+    rewriteheaders:
+      moduleName: "github.com/vincentinttsh/rewriteheaders"
+      version: "v1.0.0"

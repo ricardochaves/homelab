@@ -1,0 +1,25 @@
+- DNS:
+    - Pi-Hole1:
+        icon: pi-hole.svg
+        href: {%raw%}"{{HOMEPAGE_VAR_PIHOLE_URL_1}}/admin"{%endraw%}
+
+        description: My Pi-Hole
+        widget:
+            type: pihole
+            url: {%raw%}"{{HOMEPAGE_VAR_PIHOLE_URL_1}}"{%endraw%}
+
+            key: {%raw%}"{{HOMEPAGE_VAR_PIHOLE_API_KEY_1}}"{%endraw%}
+
+- Docker:
+    - OrangePi Portainer:
+        icon: portainer.svg
+        href: {%raw%}"{{HOMEPAGE_VAR_PORTAINER_URL}}"{%endraw%}
+
+        description: Portainer of OrangePi
+        widget:
+            type: portainer
+            url: {%raw%}"{{HOMEPAGE_VAR_PORTAINER_URL}}"{%endraw%}
+
+            env: {%raw%}"{{HOMEPAGE_VAR_PORTAINER_ENV}}"{%endraw%}
+
+            key: {%raw%}"{{HOMEPAGE_VAR_PORTAINER_API_KEY}}"{%endraw%}

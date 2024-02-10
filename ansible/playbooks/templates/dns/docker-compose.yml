@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    hostname: ${HOSTNAME}
+    ports:
+      - "53/tcp"
+      - "53/udp"
+      - "80/tcp"
+    environment:
+      - FTLCONF_LOCAL_IPV4=${PIHOLE_MACVLAN_IP}
+      - WEBPASSWORD=${WEBPASSWORD}
+      - PIHOLE_DNS_=${UNBOUND_MACVLAN_IP}
+      - TZ=${TIMEZONE}
+      - DNSMASQ_USER=root
+      - DNSMASQ_LISTENING=local
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./etc/pihole:/etc/pihole:rw
+      - ./etc/dnsmasq.d:/etc/dnsmasq.d/:rw
+    networks:
+      server_macvlan:
+        ipv4_address: ${PIHOLE_MACVLAN_IP}
+      proxy:
+        ipv4_address: ${PIHOLE_PROXY_IP}
+    restart: always
+  unbound:
+    container_name: unbound
+    security_opt:
+      - no-new-privileges:true
+    image: pedantic/unbound:latest
+    ports:
+      - 53/tcp
+      - 53/udp
+    networks:
+      server_macvlan:
+        ipv4_address: ${UNBOUND_MACVLAN_IP}
+    restart: always
+networks:
+  server_macvlan:
+    external: true
+  proxy:
+    external: true

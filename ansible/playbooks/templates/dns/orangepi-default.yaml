@@ -1,0 +1,11 @@
+network:
+ version: 2
+ renderer: NetworkManager
+ ethernets:
+   eth0:
+     dhcp4: no
+     addresses: [{{ fixed_ip }}/24]
+     gateway4: 10.0.1.1
+     nameservers:
+         addresses: [{{ pihole_proxy_ip }}]
+#         addresses: [1.1.1.1]

@@ -1,0 +1,71 @@
+---
+- hosts: orangepi
+
+  tasks:
+    - name: Create directory for Loki server
+      file:
+          path: "{{ monitoring_dir }}/etc/loki"
+          state: directory
+          mode: 0755
+
+    - name: Create directory for Promtail server
+      file:
+          path: "{{ monitoring_dir }}/etc/promtail"
+          state: directory
+          mode: 0755
+
+    - name: Create directory for Grafana server
+      file:
+          path: "{{ monitoring_dir }}/grafana"
+          state: directory
+          mode: 0755
+
+    - name: Create a loki-config.yml file
+      ansible.builtin.template:
+        src: monitoring/loki-config.yml
+        dest: "{{ monitoring_dir }}/etc/loki"
+
+    - name: Create a promtail-config.yml file
+      ansible.builtin.template:
+        src: monitoring/promtail-config.yml
+        dest: "{{ monitoring_dir }}/etc/promtail"
+
+    - name: Create a docker-compose.yml file
+      ansible.builtin.template:
+        src: monitoring/docker-compose.yml
+        dest: "{{ monitoring_dir }}"
+
+    - name: Create a .env file
+      ansible.builtin.template:
+        src: monitoring/.env
+        dest: "{{ monitoring_dir }}"
+
+    - name: Create a daemon.json file
+      ansible.builtin.template:
+        src: monitoring/daemon.json
+        dest: "/etc/docker/"
+      register: copy_compose_file
+      become: true
+
+    - name: Reload service docker, in all cases
+      ansible.builtin.systemd_service:
+        name: docker.service
+        state: reloaded
+      become: true
+
+    - name: Ensure docker deamon is running
+      service:
+        name: docker
+        state: started
+      become: true
+
+    - name: Run `docker-compose down`
+      command: "sudo docker compose -f {{ monitoring_dir }}/docker-compose.yml down"
+
+    - name: Run `docker-compose up`
+      command: "sudo docker compose -f {{ monitoring_dir }}/docker-compose.yml up -d --force-recreate"
+      register: docker_compose_output
+
+    - name: Debug output
+      debug:
+        var: docker_compose_output.stdout_lines

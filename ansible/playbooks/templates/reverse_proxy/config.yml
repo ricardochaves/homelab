@@ -1,0 +1,91 @@
+http:
+  routers:
+    pihole:
+      entryPoints:
+        - "https"
+      rule: "Host(`pihole.home.ricardobaltazar.com`)"
+      middlewares:
+#        - redirectregex-pihole
+        - default-headers
+#        - addprefix-pihole
+        - https-redirectscheme
+      tls: {}
+      service: pihole
+    main-router:
+      entryPoints:
+        - "https"
+      rule: "Host(`main-router.home.ricardobaltazar.com`)"
+      middlewares:
+        - rewrite-location-header
+        - default-headers
+        - https-redirectscheme
+      tls: {}
+      service: main-router
+    mercusys-ap:
+      entryPoints:
+        - "https"
+      rule: "Host(`mercusys-ap.home.ricardobaltazar.com`)"
+      middlewares:
+        - default-headers
+        - https-redirectscheme
+      tls: {}
+      service: mercusys-ap
+  services:
+    pihole:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.1.2:80"
+        passHostHeader: true
+    main-router:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.1.1:80"
+        passHostHeader: true
+    mercusys-ap:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.1.90:80"
+        passHostHeader: true
+  middlewares:
+#    addprefix-pihole:
+#      addPrefix:
+#        prefix: "/admin"
+    https-redirectscheme:
+      redirectScheme:
+        scheme: https
+        permanent: true
+#    redirectregex-pihole:
+#      redirectRegex:
+#        regex: "/admin/(.*)"
+#        replacement: /
+    default-headers:
+      headers:
+        frameDeny: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 15552000
+        customFrameOptionsValue: SAMEORIGIN
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+    rewrite-location-header:
+        plugin:
+            rewriteheaders:
+                rewrites:
+                    - header: Location
+                      regex: ^http://(.+)$
+                      replacement: https://$1
+    default-whitelist:
+      ipWhiteList:
+        sourceRange:
+        - "10.0.0.0/8"
+        - "192.168.0.0/16"
+        - "172.16.0.0/12"
+
+    secured:
+      chain:
+        middlewares:
+        - default-whitelist
+        - default-headers

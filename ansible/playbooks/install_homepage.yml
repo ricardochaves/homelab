@@ -1,0 +1,28 @@
+---
+- hosts: orangepi
+
+  tasks:
+    - name: Create directory for Loki server
+      file:
+          path: "{{ homepage_dir }}/config"
+          state: directory
+          mode: 0755
+
+    - name: Create a docker-compose.yml file
+      ansible.builtin.template:
+        src: homepage/docker-compose.yml
+        dest: "{{ homepage_dir }}"
+
+    - name: Create a .env file
+      ansible.builtin.template:
+        src: homepage/.env
+        dest: "{{ homepage_dir }}"
+
+    - name: Create a services.yaml file
+      ansible.builtin.template:
+        src: homepage/services.yaml
+        dest: "{{ homepage_dir }}/config"
+
+    - name: Run `docker-compose up`
+      command: "sudo docker compose -f {{ homepage_dir }}/docker-compose.yml up -d --force-recreate"
+      register: docker_compose_output
