@@ -30,6 +30,16 @@ http:
         - https-redirectscheme
       tls: {}
       service: mercusys-ap
+    portainer-mac:
+      entryPoints:
+        - "https"
+      rule: "Host(`portainer-mac.home.ricardobaltazar.com`)"
+      middlewares:
+        - rewrite-location-header
+        - default-headers
+        - https-redirectscheme
+      tls: {}
+      service: portainer-mac
   services:
     pihole:
       loadBalancer:
@@ -40,6 +50,11 @@ http:
       loadBalancer:
         servers:
           - url: "http://10.0.1.1:80"
+        passHostHeader: true
+    portainer-mac:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.1.33:9000"
         passHostHeader: true
     mercusys-ap:
       loadBalancer:

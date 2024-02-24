@@ -13,7 +13,7 @@
 - Docker:
     - OrangePi Portainer:
         icon: portainer.svg
-        href: {%raw%}"{{HOMEPAGE_VAR_PORTAINER_URL}}"{%endraw%}
+        href: {%raw%}"{{HOMEPAGE_VAR_PORTAINER_URL}}/#!/2/docker/dashboard"{%endraw%}
 
         description: Portainer of OrangePi
         widget:
@@ -23,3 +23,17 @@
             env: {%raw%}"{{HOMEPAGE_VAR_PORTAINER_ENV}}"{%endraw%}
 
             key: {%raw%}"{{HOMEPAGE_VAR_PORTAINER_API_KEY}}"{%endraw%}
+
+
+    - MAC Portainer:
+        icon: portainer.svg
+        href: {%raw%}"{{HOMEPAGE_VAR_MAC_URL}}/#!/2/docker/dashboard"{%endraw%}
+
+        description: Portainer of OrangePi
+        widget:
+            type: portainer
+            url: {%raw%}"{{HOMEPAGE_VAR_MAC_URL}}"{%endraw%}
+
+            env: {%raw%}"{{HOMEPAGE_VAR_MAC_ENV}}"{%endraw%}
+
+            key: {%raw%}"{{HOMEPAGE_VAR_MAC_API_KEY}}"{%endraw%}
