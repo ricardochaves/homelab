@@ -37,3 +37,17 @@
             env: {%raw%}"{{HOMEPAGE_VAR_MAC_ENV}}"{%endraw%}
 
             key: {%raw%}"{{HOMEPAGE_VAR_MAC_API_KEY}}"{%endraw%}
+
+- Monitoring:
+      - Grafana:
+          icon: grafana.svg
+          href: {%raw%}"{{HOMEPAGE_VAR_GRAFANA_URL}}"{%endraw%}
+
+          description: Grafana
+          widget:
+            type: grafana
+            url: {%raw%}"{{HOMEPAGE_VAR_GRAFANA_URL}}"{%endraw%}
+
+            username: {%raw%}"{{HOMEPAGE_VAR_GRAFANA_USERNAME}}"{%endraw%}
+
+            password: {%raw%}"{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"{%endraw%}
