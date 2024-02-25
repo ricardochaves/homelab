@@ -51,3 +51,17 @@
             username: {%raw%}"{{HOMEPAGE_VAR_GRAFANA_USERNAME}}"{%endraw%}
 
             password: {%raw%}"{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"{%endraw%}
+
+- Reverse Proxy:
+    - Traefik:
+        icon: traefik.svg
+        href: {%raw%}"{{HOMEPAGE_VAR_TRAEFIK_URL}}"{%endraw%}
+
+        description: Traefik
+        widget:
+          type: traefik
+          url: {%raw%}"{{HOMEPAGE_VAR_TRAEFIK_URL}}"{%endraw%}
+
+          username: {%raw%}"{{HOMEPAGE_VAR_TRAEFIK_USERNAME}}"{%endraw%}
+
+          password: {%raw%}"{{HOMEPAGE_VAR_TRAEFIK_PASSWORD}}"{%endraw%}
