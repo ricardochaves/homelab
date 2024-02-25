@@ -1,12 +1,12 @@
 - DNS:
     - Pi-Hole1:
         icon: pi-hole.svg
-        href: {%raw%}"{{HOMEPAGE_VAR_PIHOLE_URL_1}}/admin"{%endraw%}
+        href: {%raw%}"{{HOMEPAGE_VAR_PIHOLE_URL_1}}"{%endraw%}
 
         description: My Pi-Hole
         widget:
             type: pihole
-            url: {%raw%}"{{HOMEPAGE_VAR_PIHOLE_URL_1}}"{%endraw%}
+            url: {%raw%}"{{HOMEPAGE_VAR_PIHOLE_API_URL}}"{%endraw%}
 
             key: {%raw%}"{{HOMEPAGE_VAR_PIHOLE_API_KEY_1}}"{%endraw%}
 

@@ -1,13 +1,22 @@
 http:
   routers:
+    api-pihole:
+      entryPoints:
+        - "https"
+      rule: "Host(`api-pihole.home.ricardobaltazar.com`)"
+      middlewares:
+        - default-headers
+        - https-redirectscheme
+      tls: { }
+      service: api-pihole
     pihole:
       entryPoints:
         - "https"
       rule: "Host(`pihole.home.ricardobaltazar.com`)"
       middlewares:
-#        - redirectregex-pihole
+        - redirectregex-pihole
         - default-headers
-#        - addprefix-pihole
+        - addprefix-pihole
         - https-redirectscheme
       tls: {}
       service: pihole
@@ -46,6 +55,11 @@ http:
         servers:
           - url: "http://10.0.1.2:80"
         passHostHeader: true
+    api-pihole:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.1.2:80"
+        passHostHeader: true
     main-router:
       loadBalancer:
         servers:
@@ -62,17 +76,17 @@ http:
           - url: "http://10.0.1.90:80"
         passHostHeader: true
   middlewares:
-#    addprefix-pihole:
-#      addPrefix:
-#        prefix: "/admin"
+    addprefix-pihole:
+      addPrefix:
+        prefix: "/admin"
     https-redirectscheme:
       redirectScheme:
         scheme: https
         permanent: true
-#    redirectregex-pihole:
-#      redirectRegex:
-#        regex: "/admin/(.*)"
-#        replacement: /
+    redirectregex-pihole:
+      redirectRegex:
+        regex: "/admin/(.*)"
+        replacement: /
     default-headers:
       headers:
         frameDeny: true
