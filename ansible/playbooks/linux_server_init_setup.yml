@@ -103,18 +103,6 @@
         state: latest
         update_cache: true
 
-    - name: Install the grafana/loki-docker-driver plugin
-      community.docker.docker_plugin:
-        plugin_name: miacis/loki-docker-driver:2.9.1
-        state: present
-        alias: loki
-      register: loki_plugin
-
-    - name: Enable the grafana/loki-docker-driver plugin
-      community.docker.docker_plugin:
-        plugin_name: "loki:latest"
-        state: enable
-
     - name: rsyslog - Install rsyslog
       apt:
         name: rsyslog

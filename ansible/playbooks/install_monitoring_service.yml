@@ -40,28 +40,6 @@
         src: monitoring/.env
         dest: "{{ monitoring_dir }}"
 
-    - name: Create a daemon.json file
-      ansible.builtin.template:
-        src: monitoring/daemon.json
-        dest: "/etc/docker/"
-      register: copy_compose_file
-      become: true
-
-    - name: Reload service docker, in all cases
-      ansible.builtin.systemd_service:
-        name: docker.service
-        state: reloaded
-      become: true
-
-    - name: Ensure docker deamon is running
-      service:
-        name: docker
-        state: started
-      become: true
-
-    - name: Run `docker-compose down`
-      command: "sudo docker compose -f {{ monitoring_dir }}/docker-compose.yml down"
-
     - name: Run `docker-compose up`
       command: "sudo docker compose -f {{ monitoring_dir }}/docker-compose.yml up -d --force-recreate"
       register: docker_compose_output

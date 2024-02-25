@@ -31,7 +31,8 @@ services:
     volumes:
       - /var/log:/var/log
       - ./etc/promtail:/etc/promtail/
-      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     command: -config.file=/etc/promtail/promtail-config.yml
     networks:
       proxy:
