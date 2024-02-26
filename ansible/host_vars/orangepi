@@ -4,6 +4,7 @@ dns_dir: /home/orangepi/dns
 reverse_proxy_dir: /home/orangepi/reverse_proxy
 monitoring_dir: /home/orangepi/monitoring
 homepage_dir: /home/orangepi/homepage
+homeassistant_dir: /home/orangepi/homeassistant
 
 # SERVER_MACVLAN
 macvlan_subnet: 10.0.1.0/24
@@ -38,3 +39,11 @@ promtail_proxy_ip: 192.168.0.6
 # HOMEPAGE
 homepage_proxy_ip: 192.168.0.8
 homepage_macvlan_ip: 10.0.1.7
+
+# MONITORING
+prometheus_proxy_ip: 192.168.0.9
+prometheus_macvlan_ip: 10.0.1.8
+node_exporter_proxy_ip: 192.168.0.10
+cadvisor_proxy_ip: 192.168.0.11
+
+# HOMEASSISTANT

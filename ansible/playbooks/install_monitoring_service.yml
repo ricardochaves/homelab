@@ -8,6 +8,12 @@
           state: directory
           mode: 0755
 
+    - name: Create directory for Prometheus server
+      file:
+          path: "{{ monitoring_dir }}/prometheus/data"
+          state: directory
+          mode: 0755
+
     - name: Create directory for Promtail server
       file:
           path: "{{ monitoring_dir }}/etc/promtail"
@@ -24,6 +30,11 @@
       ansible.builtin.template:
         src: monitoring/loki-config.yml
         dest: "{{ monitoring_dir }}/etc/loki"
+
+    - name: Create a prometheus.yml file
+      ansible.builtin.template:
+        src: monitoring/prometheus.yml
+        dest: "{{ monitoring_dir }}/prometheus"
 
     - name: Create a promtail-config.yml file
       ansible.builtin.template:
