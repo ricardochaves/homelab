@@ -47,3 +47,5 @@ node_exporter_proxy_ip: 192.168.0.10
 cadvisor_proxy_ip: 192.168.0.11
 
 # HOMEASSISTANT
+homeassistant_proxy_ip: 192.168.0.12
+homeassistant_macvlan_ip: 10.0.1.9

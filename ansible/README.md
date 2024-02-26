@@ -60,3 +60,9 @@ ansible-playbook install_monitoring_service.yml
 ```bash
 ansible-playbook install_homepage.yml
 ```
+
+### Home Assistant
+
+```bash
+ansible-playbook install_homeassistant.yml
+```

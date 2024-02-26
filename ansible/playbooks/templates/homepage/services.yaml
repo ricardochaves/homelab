@@ -65,3 +65,15 @@
           username: {%raw%}"{{HOMEPAGE_VAR_TRAEFIK_USERNAME}}"{%endraw%}
 
           password: {%raw%}"{{HOMEPAGE_VAR_TRAEFIK_PASSWORD}}"{%endraw%}
+
+- Home Assistant:
+    - Home Assistant:
+        icon: home-assistant.svg
+        href: {%raw%}"{{HOMEPAGE_VAR_HOMEASSISTANT_URL}}"{%endraw%}
+
+        description: Home Assistant
+        widget:
+          type: homeassistant
+          url: {%raw%}"{{HOMEPAGE_VAR_HOMEASSISTANT_URL}}"{%endraw%}
+
+          key: {%raw%}"{{HOMEPAGE_VAR_HOMEASSISTANT_API_KEY}}"{%endraw%}

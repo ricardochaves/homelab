@@ -1,0 +1,37 @@
+version: '3'
+services:
+  homeassistant:
+    container_name: homeassistant
+    env_file:
+      - .env
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /home/orangepi/homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    networks:
+      proxy:
+        ipv4_address: ${HOMEASSISTANT_PROXY_IP}
+      server_macvlan:
+        ipv4_address: ${HOMEASSISTANT_MACVLAN_IP}
+    ports:
+      - "8123:8123"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homeassistant.entrypoints=http"
+      - "traefik.http.routers.homeassistant.rule=Host(`homeassistant.home.ricardobaltazar.com`)"
+      - "traefik.http.middlewares.homeassistant-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.homeassistant.middlewares=homeassistant-https-redirect"
+      - "traefik.http.routers.homeassistant-secure.entrypoints=https"
+      - "traefik.http.routers.homeassistant-secure.rule=Host(`homeassistant.home.ricardobaltazar.com`)"
+      - "traefik.http.routers.homeassistant-secure.tls=true"
+      - "traefik.http.routers.homeassistant-secure.service=homeassistant"
+      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
+      - "traefik.docker.network=proxy"
+networks:
+  proxy:
+    external: true
+  server_macvlan:
+    external: true
