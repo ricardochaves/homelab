@@ -2,7 +2,7 @@
 - hosts: orangepi
 
   tasks:
-    - name: Create directory for Loki server
+    - name: Create directory for Home Assistant
       file:
           path: "{{ homeassistant_dir }}/config"
           state: directory
@@ -26,3 +26,16 @@
     - name: Run `docker-compose up`
       command: "sudo docker compose -f {{ homeassistant_dir }}/docker-compose.yml up -d --force-recreate"
       register: docker_compose_output
+
+    - name: Install HACK
+      community.docker.docker_container_exec:
+        container: homeassistant
+        command: /bin/bash -c "wget -O - https://get.hacs.xyz | bash -"
+      register: result
+
+    - name: Print the result
+      debug:
+        var: result
+
+    - name: Restart container command
+      command: "docker restart homeassistant"
