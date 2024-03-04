@@ -39,7 +39,12 @@ services:
       - "traefik.http.routers.traefik-secure.tls.domains[0].main=local.ricardobaltazar.com"
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.home.ricardobaltazar.com"
       - "traefik.http.routers.traefik-secure.service=api@internal"
-
+    healthcheck:
+      test: traefik healthcheck
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 networks:
   proxy:
     external: true

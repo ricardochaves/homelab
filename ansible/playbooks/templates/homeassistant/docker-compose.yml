@@ -30,6 +30,13 @@ services:
       - "traefik.http.routers.homeassistant-secure.service=homeassistant"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
       - "traefik.docker.network=proxy"
+    healthcheck:
+      test: "wget --no-verbose --tries=3 --spider http://localhost:8123 || exit 1"
+      interval: 20s
+      timeout: 15s
+      retries: 10
+      start_period: 40s
+
 networks:
   proxy:
     external: true

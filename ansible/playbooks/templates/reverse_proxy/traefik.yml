@@ -2,6 +2,8 @@ api:
   dashboard: true
   debug: true
 entryPoints:
+  ping:
+    address: ":8082"
   http:
     address: ":80"
     http:
@@ -41,3 +43,6 @@ experimental:
     rewriteheaders:
       moduleName: "github.com/vincentinttsh/rewriteheaders"
       version: "v1.0.0"
+
+ping:
+  entryPoint: "ping"
