@@ -46,10 +46,19 @@
         src: monitoring/docker-compose.yml
         dest: "{{ monitoring_dir }}"
 
+    - name: Create a Dockerfile file
+      ansible.builtin.template:
+        src: monitoring/Dockerfile
+        dest: "{{ monitoring_dir }}"
+
     - name: Create a .env file
       ansible.builtin.template:
         src: monitoring/.env
         dest: "{{ monitoring_dir }}"
+
+    - name: Run `docker-compose build`
+      command: "sudo docker compose -f {{ monitoring_dir }}/docker-compose.yml build --no-cache"
+      register: docker_compose_output
 
     - name: Run `docker-compose up`
       command: "sudo docker compose -f {{ monitoring_dir }}/docker-compose.yml up -d --force-recreate"
