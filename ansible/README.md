@@ -66,3 +66,9 @@ ansible-playbook install_homepage.yml
 ```bash
 ansible-playbook install_homeassistant.yml
 ```
+
+### N8N
+
+```bash
+ansible-playbook install_n8n.yml
+```

@@ -5,6 +5,7 @@ reverse_proxy_dir: /home/orangepi/reverse_proxy
 monitoring_dir: /home/orangepi/monitoring
 homepage_dir: /home/orangepi/homepage
 homeassistant_dir: /home/orangepi/homeassistant
+n8n_dir: /home/orangepi/n8n
 
 # SERVER_MACVLAN
 macvlan_subnet: 10.0.1.0/24
@@ -49,3 +50,6 @@ cadvisor_proxy_ip: 192.168.0.11
 # HOMEASSISTANT
 homeassistant_proxy_ip: 192.168.0.12
 homeassistant_macvlan_ip: 10.0.1.9
+
+# N8N
+n8n_proxy_ip: 192.168.0.13
