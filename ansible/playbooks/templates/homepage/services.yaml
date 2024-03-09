@@ -77,3 +77,16 @@
           url: {%raw%}"{{HOMEPAGE_VAR_HOMEASSISTANT_URL}}"{%endraw%}
 
           key: {%raw%}"{{HOMEPAGE_VAR_HOMEASSISTANT_API_KEY}}"{%endraw%}
+
+- Cripto:
+  - Market Cap:
+      icon: https://pro.coinmarketcap.com/public/media/img/logo-square-inverse.png
+      href: https://pro.coinmarketcap.com/account/
+
+      description: Coin Market Cap
+      widget:
+        type: coinmarketcap
+        currency: USD # Optional
+        symbols: [ BTC ]
+        key: bcc7f0ff-783a-426e-8dbc-af333e6e9f32
+        defaultinterval: 7d # Optional
